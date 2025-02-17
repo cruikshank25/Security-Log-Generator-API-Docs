@@ -1,5 +1,6 @@
 # Security Log Generator API
-API Link - https://security_log_generator_v1.p.rapidapi.com
+Rapid API Hub Listing - https://rapidapi.com/shook25/api/security_log_generator_v1
+API Link (you need a API key from Rapid API first) - https://security_log_generator_v1.p.rapidapi.com
 
 As well as this README file, the API has in built swagger documentation which can be accessed via the base URL in a Web Browser without any parameters i.e.
 ```
