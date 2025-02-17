@@ -1,13 +1,22 @@
 # Security Log Generator API
-API Link - https://slgapi.com
+API Link - https://security_log_generator_v1.p.rapidapi.com
 
 As well as this README file, the API has in built swagger documentation which can be accessed via the base URL in a Web Browser without any parameters i.e.
 ```
-https://slgapi.com
+https://security_log_generator_v1.p.rapidapi.com
 ```
 
-![swagger_ui_usage](slg_swagger_usage.gif)
+![swagger_ui_usage](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/slg_swagger_usage.gif?raw=true)
 
+***Important first note for access via browser:*** To access the swagger docmentation on the base url,  ```https://security_log_generator_v1.p.rapidapi.com```, via a browser like in the gif above, you need to add the API Key provided by Rapid API to the request headers for HTTP requests you send to the API.
+
+For browsers, this generally needs a HTTP Interceptor to achieve as you can't as easily specify request headers. I am using Requestly which allows me to setup rules for when I access certain URLs. To provide Rapid API your API key and be able to access the interactive Swagger documentation, supply the following headers ```x-rapidapi-host``` and  ``` x-rapidapi-key``` like in the image below:
+
+![requestly_http_interceptor_config](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/requestly.png?raw=true)
+
+There are plenty of free alternatives to Requestly, just search for "HTTP Interceptor" or "Request Header Editor" in your browser extension marketplace. 
+
+**If you don't need browser based access, you can still use** ```curl``` **as usual from the command line.**
 
 ## Description
 The Security Log Generator API returns synthetically generated events that are commonly logged and utilised within SIEM solutions. 
@@ -47,7 +56,10 @@ The API is simple to use. There is an endpoint per available log type as follows
 
 - **Request**:
 ```
-curl https://slgapi.com/events/ids
+curl --request GET 
+	--url https://security_log_generator_v1.p.rapidapi.com/events/ids 
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' 
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 
@@ -72,7 +84,7 @@ The events are uniquely generated each time, if the results appear the same in a
 
 **Example from the command line:**
 
-![swagger_cli_usage](slg_cli_usage.gif)
+![swagger_cli_usage](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/slg_cli_usage.gif?raw=true)
 
 
 
@@ -99,7 +111,10 @@ The higher the number, the longer the server will take to generate the events.
 
 **Example Usage:**
 ```
-curl https://slgapi.com/events/ids?no_events=100
+curl --request GET 
+	--url 'https://security_log_generator_v1.p.rapidapi.com/events/ids?no_events=1000' 
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' 
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 
@@ -121,7 +136,10 @@ Defaults to `json`.
 
 **Example Usage:**
 ```
-curl https://slgapi.com/events/ids?response_type=gzip
+curl --request GET \
+	--url 'https://security_log_generator_v1.p.rapidapi.com/events/ids?response_type=gzip' \
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' \
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 *Note: gzip does not work from the swagger interface, use either a terminal or browser to retrieve gzip files instead of json.*
@@ -146,7 +164,10 @@ Defaults to current server time.
 
 **Example Usage:**
 ```
-curl https://slgapi.com/events/ids?start_datetime=2025-01-01%2000%3A0%3A00
+curl --request GET 
+	--url 'https://security_log_generator_v1.p.rapidapi.com/events/ids?start_datetime=2025-01-01%252000%253A0%253A00' 
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' 
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 
@@ -166,7 +187,10 @@ Defaults to the current server time + delta of 24 hours.
 
 **Example Usage:**
 ```
-curl https://slgapi.com/events/ids?end_datetime=2025-01-02%2000%3A0%3A00
+curl --request GET \
+	--url 'https://security_log_generator_v1.p.rapidapi.com/events/ids?end_datetime=2025-01-02%252000%253A0%253A00' \
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' \
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 
@@ -188,26 +212,32 @@ Right now there are `3` possible values, `linear`, `bumpy_random` or `bumpy_patt
 
 - `linear` spreads all events evenly across the time period i.e. 
 
-![linear](linear_pattern.png)
+![linear](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/linear_pattern.png?raw=true)
 
 - `bumpy_random` events will be randomly distributed which will form uneven peaks and dips.
 
-![bumpy_random](bumpy_random.png)
+![bumpy_random](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/bumpy_random.png?raw=true)
 
 - `bumpy_pattern` events will be distributed over a sinusoidal waveform, creating even peaks and dips.
 
-![bumpy_pattern](bumpy_pattern.png)
+![bumpy_pattern](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/bumpy_pattern.png?raw=true)
 
 
 **Example Usage:**
 ```
-curl https://slgapi.com/events/ids?timestamp_spread=bumpy_random
+curl --request GET \
+	--url 'https://security_log_generator_v1.p.rapidapi.com/events/ids?spread_type=bumpy_random' \
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' \
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 You will need to generate a higher number of events to notice the spread of timestamps on a plot:
 
 ```
-curl https://slgapi.com/events/ids?timestamp_spread=bumpy_random&no_events=1000
+curl --request GET \
+	--url 'https://security_log_generator_v1.p.rapidapi.com/events/ids?spread_type=bumpy_random&no_events=1000' \
+	--header 'x-rapidapi-host: security_log_generator_v1.p.rapidapi.com' \
+	--header 'x-rapidapi-key: YOUR_API_KEY_HERE'
 ```
 
 
@@ -352,6 +382,6 @@ Time in Seconds (1,000 events) | 0.474s | 11.43s | 6.48s | 0.44s | 6.19s |
 
 - use the jq tool in terminal to 'prettify' the json output, for example:
 
-![jq_pretty_output](pretty_output.png)
+![jq_pretty_output](https://github.com/cruikshank25/Security-Log-Generator-API-Docs/blob/main/pretty_output.png?raw=true)
 
 
